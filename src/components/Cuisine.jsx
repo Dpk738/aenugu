@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Flame } from 'lucide-react';
 
 import lambCurry from '../assets/lamb_curry.png';
@@ -142,17 +142,13 @@ const MENU_DATA = {
   ]
 };
 
-const CATEGORIES = [
-  { id: 'andhra', label: 'Andhra Specialties' },
-  { id: 'telangana', label: 'Telangana Specialties' },
-  { id: 'thalis', label: 'Traditional Thalis' },
-  { id: 'veg', label: 'Vegetarian Delicacies' },
-  { id: 'nonveg', label: 'Non-Vegetarian' },
-  { id: 'specials', label: 'Chef Specials' }
-];
-
 export default function Cuisine() {
-  const [activeTab, setActiveTab] = useState('andhra');
+  // Keep exactly 3 representative items (Andhra, Telangana, and Royal Banquet)
+  const allDishes = [
+    MENU_DATA.andhra[0],      // Gongura Mamsam (Andhra Icon)
+    MENU_DATA.telangana[1],   // Natukodi Pulusu (Classic Countryside)
+    MENU_DATA.thalis[0]       // Aenugu Royal Rajahmundry Thali (Signature Banquet)
+  ];
 
   return (
     <section id="cuisine" className="section-padding" style={{ backgroundColor: 'var(--color-bg-light)' }}>
@@ -172,26 +168,13 @@ export default function Cuisine() {
           </p>
         </div>
 
-        {/* Tab Controls */}
-        <div className="cuisine-tabs-container reveal-on-scroll">
-          {CATEGORIES.map((cat) => (
-            <button
-              key={cat.id}
-              className={`cuisine-tab-btn ${activeTab === cat.id ? 'active' : ''}`}
-              onClick={() => setActiveTab(cat.id)}
-            >
-              {cat.label}
-            </button>
-          ))}
-        </div>
-
         {/* Menu Cards Grid */}
         <div className="cuisine-grid">
-          {MENU_DATA[activeTab].map((dish, index) => (
+          {allDishes.map((dish, index) => (
             <div 
               key={dish.title} 
               className="cuisine-card reveal-on-scroll" 
-              style={{ animationDelay: `${index * 0.1}s` }}
+              style={{ animationDelay: `${index * 0.05}s` }}
             >
               <div className="cuisine-card-image-box">
                 <img src={dish.img} alt={dish.title} className="cuisine-card-img" loading="lazy" />
