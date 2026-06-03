@@ -60,7 +60,6 @@ export default function Footer({ onOpenReservation }) {
               <li><a href="#hero" onClick={(e) => handleNavClick(e, 'hero')}>Home</a></li>
               <li><a href="#story" onClick={(e) => handleNavClick(e, 'story')}>Our Story</a></li>
               <li><a href="#cuisine" onClick={(e) => handleNavClick(e, 'cuisine')}>Cuisine</a></li>
-              <li><a href="#experience" onClick={(e) => handleNavClick(e, 'experience')}>Experience</a></li>
               <li><a href="#architecture" onClick={(e) => handleNavClick(e, 'architecture')}>Architecture</a></li>
               <li><a href="#location" onClick={(e) => handleNavClick(e, 'location')}>Contact & Location</a></li>
             </ul>

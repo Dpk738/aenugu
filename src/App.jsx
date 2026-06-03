@@ -10,7 +10,6 @@ import Hero from './components/Hero';
 import Story from './components/Story';
 import Cuisine from './components/Cuisine';
 import WhyChooseUs from './components/WhyChooseUs';
-import Experience from './components/Experience';
 import Architecture from './components/Architecture';
 import Testimonials from './components/Testimonials';
 import Location from './components/Location';
@@ -128,9 +127,6 @@ function App() {
 
       {/* Dark Value Proposition Grid */}
       <WhyChooseUs />
-
-      {/* Immersive Gatherings */}
-      <Experience onOpenReservation={openReservation} />
 
       {/* Heritage Architecture Showcase */}
       <Architecture />

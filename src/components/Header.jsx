@@ -58,7 +58,6 @@ export default function Header({ onOpenReservation }) {
               <li className="nav-item"><a href="#hero" onClick={(e) => handleNavClick(e, 'hero')}>Home</a></li>
               <li className="nav-item"><a href="#story" onClick={(e) => handleNavClick(e, 'story')}>Our Story</a></li>
               <li className="nav-item"><a href="#cuisine" onClick={(e) => handleNavClick(e, 'cuisine')}>Cuisine</a></li>
-              <li className="nav-item"><a href="#experience" onClick={(e) => handleNavClick(e, 'experience')}>Experience</a></li>
               <li className="nav-item"><a href="#architecture" onClick={(e) => handleNavClick(e, 'architecture')}>Architecture</a></li>
               <li className="nav-item"><a href="#location" onClick={(e) => handleNavClick(e, 'location')}>Contact</a></li>
             </ul>
@@ -104,9 +103,6 @@ export default function Header({ onOpenReservation }) {
           </li>
           <li className="mobile-nav-item">
             <a href="#cuisine" onClick={(e) => handleNavClick(e, 'cuisine')}>Cuisine</a>
-          </li>
-          <li className="mobile-nav-item">
-            <a href="#experience" onClick={(e) => handleNavClick(e, 'experience')}>Experience</a>
           </li>
           <li className="mobile-nav-item">
             <a href="#architecture" onClick={(e) => handleNavClick(e, 'architecture')}>Architecture</a>
