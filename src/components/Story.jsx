@@ -1,5 +1,5 @@
 import React from 'react';
-import culinarySpices from '../assets/culinary_spices.png';
+import namasteStatue from '../assets/namaste_statue.png';
 
 export default function Story() {
   return (
@@ -51,8 +51,8 @@ export default function Story() {
             <div className="story-decor-frame"></div>
             <div className="story-image-container">
               <img 
-                src={culinarySpices} 
-                alt="Authentic Indian spices and heritage ingredients" 
+                src={namasteStatue} 
+                alt="Namaste Greeting Heritage Statue Motif" 
                 className="story-img"
                 loading="lazy"
               />
