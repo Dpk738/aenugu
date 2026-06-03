@@ -10,37 +10,35 @@ export default function Story() {
       if (!sectionRef.current || !imageRef.current) return;
       
       const rect = sectionRef.current.getBoundingClientRect();
-      const viewportHeight = window.innerHeight;
+      const windowHeight = window.innerHeight;
       
-      // Calculate how far the section is scrolled through the viewport
-      const totalSpan = viewportHeight + rect.height;
-      const scrolled = viewportHeight - rect.top;
-      
-      // Compute percentage (0 to 1)
-      let progress = scrolled / totalSpan;
-      progress = Math.max(0, Math.min(1, progress));
-      
-      // Map progress to transformations:
-      // Shift from +80px (bottom) to -80px (top)
-      const shiftY = 80 - 160 * progress;
-      
-      // Opacity: fade in (0 to 0.3) and fade out (0.7 to 1)
-      let opacity = 1;
-      if (progress < 0.3) {
-        opacity = progress / 0.3;
-      } else if (progress > 0.7) {
-        opacity = (1 - progress) / 0.3;
+      // Check if the section is currently in the viewport range (with padding)
+      if (rect.top < windowHeight && rect.bottom > 0) {
+        const totalRange = windowHeight + rect.height;
+        const scrolled = windowHeight - rect.top;
+        const progress = scrolled / totalRange; // 0 to 1
+        
+        let translateX = 0;
+        const maxOffset = 50; // Max horizontal offset percentage
+        
+        if (progress < 0.5) {
+          // Entering phase: scroll progress from 0% (enters bottom) to 50% (centered)
+          const t = progress / 0.5;
+          const easedT = 1 - Math.pow(1 - t, 3); // ease-out cubic
+          translateX = (1 - easedT) * maxOffset;
+        } else {
+          // Exiting phase: scroll progress from 50% (centered) to 100% (leaves top)
+          const t = (progress - 0.5) / 0.5;
+          const easedT = Math.pow(t, 3); // ease-in cubic
+          translateX = easedT * maxOffset;
+        }
+        
+        imageRef.current.style.transform = `translateX(${translateX}%)`;
       }
-      
-      // Scale: peak at 1.0 in the center
-      const scale = 0.92 + 0.08 * Math.sin(progress * Math.PI);
-      
-      imageRef.current.style.transform = `translateY(${shiftY}px) scale(${scale})`;
-      imageRef.current.style.opacity = opacity;
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    // Trigger initial positioning
+    // Trigger once initially to set the correct position
     handleScroll();
 
     return () => {
@@ -49,7 +47,7 @@ export default function Story() {
   }, []);
 
   return (
-    <section id="story" ref={sectionRef} className="section-padding">
+    <section id="story" className="section-padding" ref={sectionRef}>
       <div className="container">
         <div className="story-grid reveal-on-scroll">
           
@@ -93,16 +91,14 @@ export default function Story() {
           </div>
 
           {/* Story Image */}
-          <div className="story-visuals">
-            <div className="story-image-container">
-              <img 
-                ref={imageRef}
-                src={namasteStatue} 
-                alt="Namaste Greeting Heritage Statue Motif" 
-                className="story-img"
-                loading="lazy"
-              />
-            </div>
+          <div className="story-visuals" style={{ overflow: 'hidden' }}>
+            <img 
+              ref={imageRef}
+              src={namasteStatue} 
+              alt="Namaste Greeting Heritage Statue Motif" 
+              className="story-img"
+              loading="lazy"
+            />
           </div>
 
         </div>
