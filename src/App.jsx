@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import Lenis from 'lenis';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './App.css';
 
 // Component Imports
@@ -14,37 +17,71 @@ import Location from './components/Location';
 import ReservationModal from './components/ReservationModal';
 import Footer from './components/Footer';
 
+gsap.registerPlugin(ScrollTrigger);
+
 function App() {
   const [isReservationOpen, setIsReservationOpen] = useState(false);
 
   const openReservation = () => setIsReservationOpen(true);
   const closeReservation = () => setIsReservationOpen(false);
 
+  // Initialize Lenis smooth scrolling globally
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      smoothTouch: true, // Enable smooth scrolling on touch devices/mobile
+    });
+
+    window.lenis = lenis;
+
+    lenis.on('scroll', ScrollTrigger.update);
+
+    const gsapTicker = (time) => {
+      lenis.raf(time * 1000);
+    };
+    gsap.ticker.add(gsapTicker);
+    gsap.ticker.lagSmoothing(0);
+
+    return () => {
+      lenis.destroy();
+      window.lenis = null;
+      gsap.ticker.remove(gsapTicker);
+    };
+  }, []);
+
   const exploreCuisine = () => {
     const cuisineSection = document.getElementById('cuisine');
     if (cuisineSection) {
-      const headerOffset = 70;
-      const elementPosition = cuisineSection.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
+      if (window.lenis) {
+        window.lenis.scrollTo(cuisineSection, { offset: -70 });
+      } else {
+        const headerOffset = 70;
+        const elementPosition = cuisineSection.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
     }
   };
 
   const contactUs = () => {
     const locationSection = document.getElementById('location');
     if (locationSection) {
-      const headerOffset = 70;
-      const elementPosition = locationSection.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
+      if (window.lenis) {
+        window.lenis.scrollTo(locationSection, { offset: -70 });
+      } else {
+        const headerOffset = 70;
+        const elementPosition = locationSection.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
     }
   };
 

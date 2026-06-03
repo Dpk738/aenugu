@@ -1,11 +1,67 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import heroElephantLeft from '../assets/hero_elephant_left.jpg';
 import heroElephantRight from '../assets/hero_elephant_right.jpg';
 import heroElephantMobileRight from '../assets/hero_elephant_mobile_right.jpg';
 
+gsap.registerPlugin(ScrollTrigger);
+
 export default function Hero({ onOpenReservation, onExploreCuisine }) {
+  const heroRef = useRef(null);
+  const leftElephantRef = useRef(null);
+  const rightElephantRef = useRef(null);
+  const mobileElephantRef = useRef(null);
+
+  useEffect(() => {
+    let ctx = gsap.context(() => {
+      const mm = gsap.matchMedia();
+
+      // Only apply scroll-linked translation when user allows motion
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
+        // Left elephant translates left-outward
+        gsap.to(leftElephantRef.current, {
+          x: -250,
+          ease: "power1.inOut",
+          scrollTrigger: {
+            trigger: heroRef.current,
+            start: "top top",
+            end: "bottom top",
+            scrub: true
+          }
+        });
+
+        // Right elephant translates right-outward
+        gsap.to(rightElephantRef.current, {
+          x: 250,
+          ease: "power1.inOut",
+          scrollTrigger: {
+            trigger: heroRef.current,
+            start: "top top",
+            end: "bottom top",
+            scrub: true
+          }
+        });
+
+        // Mobile right elephant translates right-outward
+        gsap.to(mobileElephantRef.current, {
+          x: 270,
+          ease: "power1.inOut",
+          scrollTrigger: {
+            trigger: heroRef.current,
+            start: "top top",
+            end: "bottom top",
+            scrub: true
+          }
+        });
+      });
+    }, heroRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section id="hero" className="hero-section">
+    <section id="hero" className="hero-section" ref={heroRef}>
       <div className="hero-pattern-overlay" />
       
       <div className="container" style={{ position: 'relative', zIndex: 3, width: '100%' }}>
@@ -36,18 +92,21 @@ export default function Hero({ onOpenReservation, onExploreCuisine }) {
         src={heroElephantLeft} 
         alt="Aenugu Golden Elephant Left Motif" 
         className="hero-elephant-left" 
+        ref={leftElephantRef}
       />
 
       <img 
         src={heroElephantRight} 
         alt="Aenugu Golden Elephant Right Motif" 
         className="hero-elephant-right" 
+        ref={rightElephantRef}
       />
 
       <img 
         src={heroElephantMobileRight} 
         alt="Aenugu Golden Elephant Mobile Right Motif" 
         className="hero-elephant-mobile-right" 
+        ref={mobileElephantRef}
       />
 
       <div className="hero-scroll-indicator">

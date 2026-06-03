@@ -281,6 +281,7 @@
   z-index: 1;
   pointer-events: none;
   opacity: 0.95;
+  will-change: transform;
 }
 
 .hero-elephant-right {
@@ -293,10 +294,12 @@
   z-index: 1;
   pointer-events: none;
   opacity: 0.95;
+  will-change: transform;
 }
 
 .hero-elephant-mobile-right {
   display: none;
+  will-change: transform;
 }
 
 @media (max-width: 1200px) {
@@ -324,11 +327,11 @@
   .hero-elephant-mobile-right {
     display: block;
     position: absolute;
-    top: 50%;
+    top: calc(50% - 230px);
     transform: translateY(-50%);
     right: 0;
-    height: 26%;
-    max-height: 180px;
+    height: 39%;
+    max-height: 270px;
     width: auto;
     z-index: 1;
     pointer-events: none;
@@ -445,21 +448,19 @@
   margin-bottom: 0.75rem;
 }
 
-/* --- Story Section --- */
-.story-section {
-  height: 220vh;
-  position: relative;
-  background-color: var(--color-bg-light);
+.story-transition-buffer {
+  display: none;
 }
 
-.story-sticky-wrapper {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  overflow: hidden;
-  width: 100%;
+@media (min-width: 992px) {
+  #story {
+    padding-top: 0;
+  }
+  .story-transition-buffer {
+    display: block;
+    height: 80vh;
+    width: 100%;
+  }
 }
 
 .story-grid {
@@ -473,6 +474,7 @@
   .story-grid {
     grid-template-columns: 1.1fr 0.9fr;
     gap: 4rem;
+    align-items: start;
   }
 }
 
@@ -483,6 +485,18 @@
 @media (min-width: 992px) {
   .story-content {
     padding-right: 2rem;
+  }
+}
+
+.story-content-spacer {
+  display: none;
+}
+
+@media (min-width: 992px) {
+  .story-content-spacer {
+    display: block;
+    height: calc(100vh - var(--story-sticky-top));
+    width: 100%;
   }
 }
 
@@ -516,53 +530,27 @@
 
 .story-visuals {
   position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+}
+
+@media (min-width: 992px) {
+  .story-visuals {
+    position: sticky;
+    top: var(--story-sticky-top);
+    height: fit-content;
+    z-index: 10;
+  }
+}
+
+.story-image-container {
+  position: relative;
   overflow: hidden;
   width: 100%;
 }
 
 .story-img {
-  width: 100%;
-  max-width: 480px;
-  height: auto;
   display: block;
-  object-fit: contain;
-  transition: transform 0.1s ease-out;
-}
-
-@media (max-width: 768px) {
-  .story-sticky-wrapper {
-    padding: 5rem 1.5rem 2rem;
-    box-sizing: border-box;
-  }
-  .story-grid {
-    gap: 1rem;
-  }
-  .story-content h2 {
-    font-size: 1.6rem;
-    margin-bottom: 0.8rem;
-  }
-  .story-body-text {
-    font-size: 0.85rem;
-    margin-bottom: 0.8rem;
-  }
-  .story-heritage-callouts {
-    margin-top: 1rem;
-    gap: 0.8rem;
-  }
-  .heritage-callout h4 {
-    font-size: 1rem;
-  }
-  .heritage-callout p {
-    font-size: 0.8rem;
-  }
-  .story-img {
-    max-height: 22vh;
-    width: auto;
-    margin: 0 auto;
-  }
+  width: 100%;
+  height: auto;
 }
 
 /* --- Cuisine Section --- */
@@ -1181,29 +1169,38 @@
   position: absolute;
   top: 0;
   left: 0;
-  background-color: #f4f3f0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  background-color: var(--color-bg-dark);
+}
+
+.google-map-iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  filter: grayscale(1) invert(0.93) contrast(1.2) brightness(0.85);
+  opacity: 0.85;
+  transition: var(--transition-smooth);
+}
+
+.google-map-iframe:hover {
+  filter: none;
+  opacity: 1;
 }
 
 .map-badge {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: var(--color-primary);
-  color: var(--color-text-light);
+  bottom: 20px;
+  left: 20px;
+  background-color: #120905; /* Rich Teakwood dark */
+  color: var(--color-primary);
   padding: 1rem 1.5rem;
   border: 1px solid var(--color-accent);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-  text-align: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  text-align: left;
   z-index: 5;
 }
 
 .map-badge h4 {
-  color: var(--color-text-light);
+  color: var(--color-primary);
   font-size: 1.1rem;
   margin-bottom: 0.2rem;
 }
@@ -1211,6 +1208,18 @@
 .map-badge p {
   color: var(--color-secondary);
   font-size: 0.8rem;
+}
+
+.map-badge-tag {
+  display: inline-block;
+  background-color: var(--color-accent);
+  color: var(--color-text-light);
+  font-size: 0.65rem;
+  padding: 0.2rem 0.6rem;
+  margin-top: 0.5rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
 /* --- Reservation Banner CTA --- */

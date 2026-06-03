@@ -65,47 +65,22 @@ export default function Location() {
             </div>
           </div>
 
-          {/* Artistic styled map */}
+          {/* Google Maps Interactive Embed */}
           <div className="map-container">
             <div className="map-svg-mockup">
-              {/* Custom styled SVG Roadmap representation for Luxury feel */}
-              <svg viewBox="0 0 400 400" width="100%" height="100%" style={{ backgroundColor: 'var(--color-bg-dark)' }}>
-                {/* Grid backdrop */}
-                <defs>
-                  <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-                    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#23140e" strokeWidth="1"/>
-                  </pattern>
-                </defs>
-                <rect width="100%" height="100%" fill="url(#grid)" />
-
-                {/* Roads */}
-                <path d="M-50,150 L450,150" stroke="#23140e" strokeWidth="24" fill="none" />
-                <path d="M-50,150 L450,150" stroke="#B58B4C" strokeWidth="20" fill="none" />
-                <text x="30" y="140" fill="var(--color-secondary)" fontSize="10" fontFamily="sans-serif" letterSpacing="1">BANDLAGUDA ROAD</text>
-
-                <path d="M150,-50 L150,450" stroke="#23140e" strokeWidth="24" fill="none" />
-                <path d="M150,-50 L150,450" stroke="#B58B4C" strokeWidth="20" fill="none" />
-                <text x="165" y="40" fill="var(--color-secondary)" fontSize="10" transform="rotate(90,165,40)" fontFamily="sans-serif" letterSpacing="1">VANTAGE LINE</text>
-
-                <path d="M280,-50 L280,450" stroke="#1d110b" strokeWidth="16" fill="none" strokeDasharray="5,5" />
-                <path d="M-50,300 L450,300" stroke="#1d110b" strokeWidth="16" fill="none" strokeDasharray="5,5" />
-
-                {/* Local Greenery */}
-                <circle cx="50" cy="50" r="30" fill="#1b2618" opacity="0.4" />
-                <circle cx="340" cy="80" r="45" fill="#1b2618" opacity="0.4" />
-                <circle cx="70" cy="340" r="50" fill="#1b2618" opacity="0.4" />
-
-                {/* Aenugu Pin Anchor */}
-                <circle cx="150" cy="220" r="16" fill="rgba(181, 139, 76, 0.2)" />
-                <circle cx="150" cy="220" r="8" fill="#B58B4C" />
-                <path d="M150,220 L150,195" stroke="var(--color-secondary)" strokeWidth="2" fill="none" />
-              </svg>
+              <iframe 
+                src="https://maps.google.com/maps?q=Vantage+Line,+Bandlaguda,+Hyderabad&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+                className="google-map-iframe"
+                allowFullScreen="" 
+                loading="lazy"
+                title="Aenugu Google Maps Location"
+              />
 
               {/* Float badge overlay */}
               <div className="map-badge">
                 <h4>Aenugu Fine Dining</h4>
                 <p>Vantage Line, Bandlaguda</p>
-                <span className="coming-soon-badge" style={{ marginTop: '5px' }}>We Are Here</span>
+                <span className="map-badge-tag">We Are Here</span>
               </div>
             </div>
           </div>

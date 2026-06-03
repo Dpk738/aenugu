@@ -30,6 +30,9 @@
   --shadow-glow: 0 0 25px rgba(181, 139, 76, 0.15);
   --transition-smooth: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   --transition-fast: all 0.3s ease;
+
+  /* Sticky Scrollytelling offsets */
+  --story-sticky-top: 15vh;
 }
 
 /* Reset */
@@ -40,7 +43,6 @@
 }
 
 html {
-  scroll-behavior: smooth;
   font-size: 16px;
   background-color: var(--color-bg-light);
   color: var(--color-text-dark);
@@ -133,68 +135,191 @@ button {
   border: 1px solid var(--color-primary);
 }
 
-/* Buttons */
+/* Buttons - Traditional South Indian Teak & Brass Redesign */
 .btn-primary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--color-primary);
-  color: var(--color-bg-light);
-  font-family: var(--font-body);
-  font-weight: 400;
+  background-color: #160b06; /* Rich dark Teakwood */
+  color: var(--color-primary);
+  font-family: var(--font-heading);
+  font-weight: 500;
   font-size: 0.85rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   padding: 1rem 2.2rem;
-  border: 1px solid var(--color-primary);
+  border: 1px solid var(--color-accent);
+  border-radius: 0; /* Traditional straight-cut joinery */
   position: relative;
-  overflow: hidden;
-  transition: var(--transition-smooth);
+  overflow: visible; /* Allow corner rivets to show */
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   z-index: 1;
+  cursor: pointer;
 }
 
+/* Inner Fine Brass Frame */
 .btn-primary::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: var(--color-accent);
-  transform: translateY(100%);
-  transition: var(--transition-smooth);
-  z-index: -1;
+  top: 3px;
+  left: 3px;
+  right: 3px;
+  bottom: 3px;
+  border: 1px solid rgba(181, 139, 76, 0.25);
+  pointer-events: none;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 2;
 }
 
+/* Outer Brass Corner Rivets */
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  background-image: 
+    radial-gradient(circle, var(--color-accent) 2px, transparent 2.5px),
+    radial-gradient(circle, var(--color-accent) 2px, transparent 2.5px),
+    radial-gradient(circle, var(--color-accent) 2px, transparent 2.5px),
+    radial-gradient(circle, var(--color-accent) 2px, transparent 2.5px);
+  background-position: 
+    0 0, 
+    100% 0, 
+    0 100%, 
+    100% 100%;
+  background-size: 6px 6px;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 3;
+}
+
+/* Primary Hover, Focus & Active States */
 .btn-primary:hover {
-  color: var(--color-text-light);
+  background-color: var(--color-accent);
+  color: var(--color-text-light); /* Dark heritage brown */
   border-color: var(--color-accent);
+  box-shadow: var(--shadow-glow);
 }
 
 .btn-primary:hover::before {
-  transform: translateY(0);
+  border-color: rgba(18, 9, 5, 0.3); /* Dark line on gold background */
+  top: 4px;
+  left: 4px;
+  right: 4px;
+  bottom: 4px;
+}
+
+.btn-primary:hover::after {
+  top: 2px;
+  left: 2px;
+  right: 2px;
+  bottom: 2px;
+  /* Rivets slide in and blend with the inner frame */
+  background-image: 
+    radial-gradient(circle, var(--color-text-light) 2.5px, transparent 3px),
+    radial-gradient(circle, var(--color-text-light) 2.5px, transparent 3px),
+    radial-gradient(circle, var(--color-text-light) 2.5px, transparent 3px),
+    radial-gradient(circle, var(--color-text-light) 2.5px, transparent 3px);
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
 }
 
 .btn-secondary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid var(--color-accent);
+  background-color: transparent;
   color: var(--color-primary);
-  font-family: var(--font-body);
-  font-weight: 400;
+  font-family: var(--font-heading);
+  font-weight: 500;
   font-size: 0.85rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   padding: 1rem 2.2rem;
-  transition: var(--transition-smooth);
-  background: transparent;
+  border: 1px solid rgba(181, 139, 76, 0.6);
+  border-radius: 0;
+  position: relative;
+  overflow: visible;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 1;
+  cursor: pointer;
 }
 
+/* Inner Dotted frame */
+.btn-secondary::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  right: 4px;
+  bottom: 4px;
+  border: 1px dashed rgba(181, 139, 76, 0.3);
+  pointer-events: none;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 2;
+}
+
+/* Tiny corner brackets */
+.btn-secondary::after {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  right: -3px;
+  bottom: -3px;
+  background-image: 
+    radial-gradient(circle, rgba(181, 139, 76, 0.6) 1.5px, transparent 2px),
+    radial-gradient(circle, rgba(181, 139, 76, 0.6) 1.5px, transparent 2px),
+    radial-gradient(circle, rgba(181, 139, 76, 0.6) 1.5px, transparent 2px),
+    radial-gradient(circle, rgba(181, 139, 76, 0.6) 1.5px, transparent 2px);
+  background-position: 
+    0 0, 
+    100% 0, 
+    0 100%, 
+    100% 100%;
+  background-size: 5px 5px;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 3;
+}
+
+/* Secondary Hover, Focus & Active States */
 .btn-secondary:hover {
-  background-color: var(--color-primary);
-  color: var(--color-bg-light);
-  border-color: var(--color-primary);
+  background-color: #160b06;
+  color: var(--color-primary);
+  border-color: var(--color-accent);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+}
+
+.btn-secondary:hover::before {
+  border: 1px solid rgba(181, 139, 76, 0.25);
+  top: 3px;
+  left: 3px;
+  right: 3px;
+  bottom: 3px;
+}
+
+.btn-secondary:hover::after {
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  background-image: 
+    radial-gradient(circle, var(--color-accent) 2px, transparent 2.5px),
+    radial-gradient(circle, var(--color-accent) 2px, transparent 2.5px),
+    radial-gradient(circle, var(--color-accent) 2px, transparent 2.5px),
+    radial-gradient(circle, var(--color-accent) 2px, transparent 2.5px);
+  background-size: 6px 6px;
+}
+
+.btn-secondary:active {
+  transform: scale(0.98);
 }
 
 /* Animations */
