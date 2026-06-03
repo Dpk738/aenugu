@@ -1,9 +1,55 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import namasteStatue from '../assets/namaste_statue.png';
 
 export default function Story() {
+  const sectionRef = useRef(null);
+  const imageRef = useRef(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!sectionRef.current || !imageRef.current) return;
+      
+      const rect = sectionRef.current.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      
+      // Calculate how far the section is scrolled through the viewport
+      const totalSpan = viewportHeight + rect.height;
+      const scrolled = viewportHeight - rect.top;
+      
+      // Compute percentage (0 to 1)
+      let progress = scrolled / totalSpan;
+      progress = Math.max(0, Math.min(1, progress));
+      
+      // Map progress to transformations:
+      // Shift from +80px (bottom) to -80px (top)
+      const shiftY = 80 - 160 * progress;
+      
+      // Opacity: fade in (0 to 0.3) and fade out (0.7 to 1)
+      let opacity = 1;
+      if (progress < 0.3) {
+        opacity = progress / 0.3;
+      } else if (progress > 0.7) {
+        opacity = (1 - progress) / 0.3;
+      }
+      
+      // Scale: peak at 1.0 in the center
+      const scale = 0.92 + 0.08 * Math.sin(progress * Math.PI);
+      
+      imageRef.current.style.transform = `translateY(${shiftY}px) scale(${scale})`;
+      imageRef.current.style.opacity = opacity;
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    // Trigger initial positioning
+    handleScroll();
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
-    <section id="story" className="section-padding">
+    <section id="story" ref={sectionRef} className="section-padding">
       <div className="container">
         <div className="story-grid reveal-on-scroll">
           
@@ -48,9 +94,9 @@ export default function Story() {
 
           {/* Story Image */}
           <div className="story-visuals">
-            <div className="story-decor-frame"></div>
             <div className="story-image-container">
               <img 
+                ref={imageRef}
                 src={namasteStatue} 
                 alt="Namaste Greeting Heritage Statue Motif" 
                 className="story-img"
