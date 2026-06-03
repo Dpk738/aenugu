@@ -458,7 +458,7 @@
   }
   .story-transition-buffer {
     display: block;
-    height: 80vh;
+    height: 64vh;
     width: 100%;
   }
 }
